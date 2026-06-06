@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -374,12 +374,11 @@
     .reviews-slider {
       position: relative;
       overflow: hidden;
-      max-width: 960px;
+      max-width: 680px;
       margin: 0 auto;
     }
     .reviews-track {
       display: flex;
-      gap: 1.5rem;
       transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     .review-card {
@@ -387,9 +386,11 @@
       border-radius: 24px;
       padding: 2rem;
       box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-      min-width: 300px;
+      min-width: 100%;
+      width: 100%;
       flex-shrink: 0;
       position: relative;
+      box-sizing: border-box;
     }
     .review-card::before {
       content: '"';
@@ -750,7 +751,6 @@
               <div><div class="review-name">Марина К.</div><div class="review-location">Тель-Авив, Израиль</div></div>
             </div>
           </div>
-
           <div class="review-card" data-review-lang="ru">
             <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
             <p class="review-text">"Пользуемся уже 3 месяца. Дочь (7 лет) каждый день проверяет свои задания. Даже сама придумывает что можно сделать чтобы заработать баллы!"</p>
@@ -759,13 +759,28 @@
               <div><div class="review-name">Алексей Р.</div><div class="review-location">Хайфа, Израиль</div></div>
             </div>
           </div>
-
           <div class="review-card" data-review-lang="ru">
             <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
             <p class="review-text">"Отличное приложение! Особенно нравится что можно настроить свои награды. Мой сын копит баллы на поездку в аквапарк — это лучшая мотивация!"</p>
             <div class="review-author">
               <div class="review-avatar" style="background:#E8D0FF;">👩</div>
               <div><div class="review-name">Светлана М.</div><div class="review-location">Нетания, Израиль</div></div>
+            </div>
+          </div>
+          <div class="review-card" data-review-lang="ru">
+            <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"Муж скептически отнёсся поначалу, но через неделю сам удивился — дети реально стали помогать. Сын даже попросил добавить новые задания!"</p>
+            <div class="review-author">
+              <div class="review-avatar" style="background:#D0E8FF;">👩</div>
+              <div><div class="review-name">Ирина Б.</div><div class="review-location">Ришон-ле-Цион, Израиль</div></div>
+            </div>
+          </div>
+          <div class="review-card" data-review-lang="ru">
+            <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"Три ребёнка — раньше было сложно следить кто что сделал. Теперь всё в приложении, всё честно. Дети не спорят, баллы не соврут!"</p>
+            <div class="review-author">
+              <div class="review-avatar" style="background:#FFF0D0;">👨</div>
+              <div><div class="review-name">Дмитрий Л.</div><div class="review-location">Беэр-Шева, Израиль</div></div>
             </div>
           </div>
 
@@ -778,13 +793,36 @@
               <div style="text-align:right;"><div class="review-name">רחל א.</div><div class="review-location">תל אביב, ישראל</div></div>
             </div>
           </div>
-
           <div class="review-card" data-review-lang="he" style="direction:rtl; text-align:right;">
             <div class="review-stars" style="justify-content:flex-end;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
             <p class="review-text">"אפליקציה מדהימה! הבן שלי (8) מחכה בכל יום לראות את המשימות שלו. המשחקיות עובדת ממש טוב. מומלץ בחום לכל הורה!"</p>
             <div class="review-author" style="flex-direction:row-reverse;">
               <div class="review-avatar" style="background:#D0FFE8;">👨</div>
               <div style="text-align:right;"><div class="review-name">דוד כ.</div><div class="review-location">חיפה, ישראל</div></div>
+            </div>
+          </div>
+          <div class="review-card" data-review-lang="he" style="direction:rtl; text-align:right;">
+            <div class="review-stars" style="justify-content:flex-end;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"סוף סוף פתרון שעובד! הבת שלי אוספת נקודות לפרס שהיא רוצה. לא צריך לצעוק יותר — היא פשוט עושה הכל בעצמה."</p>
+            <div class="review-author" style="flex-direction:row-reverse;">
+              <div class="review-avatar" style="background:#E8D0FF;">👩</div>
+              <div style="text-align:right;"><div class="review-name">מיכל ש.</div><div class="review-location">ראשון לציון, ישראל</div></div>
+            </div>
+          </div>
+          <div class="review-card" data-review-lang="he" style="direction:rtl; text-align:right;">
+            <div class="review-stars" style="justify-content:flex-end;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"שלושה ילדים ועכשיו הם מתחרים ביניהם מי יעשה יותר משימות. זה פשוט קסם. האפליקציה הכי שימושית שהורדתי!"</p>
+            <div class="review-author" style="flex-direction:row-reverse;">
+              <div class="review-avatar" style="background:#D0E8FF;">👨</div>
+              <div style="text-align:right;"><div class="review-name">יוסי מ.</div><div class="review-location">באר שבע, ישראל</div></div>
+            </div>
+          </div>
+          <div class="review-card" data-review-lang="he" style="direction:rtl; text-align:right;">
+            <div class="review-stars" style="justify-content:flex-end;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"פשוט להורדה, פשוט לשימוש. הילדים הבינו את הרעיון תוך 5 דקות. עכשיו הם מבקשים משימות חדשות כל יום!"</p>
+            <div class="review-author" style="flex-direction:row-reverse;">
+              <div class="review-avatar" style="background:#FFF0D0;">👩</div>
+              <div style="text-align:right;"><div class="review-name">נועה ג.</div><div class="review-location">נתניה, ישראל</div></div>
             </div>
           </div>
 
@@ -797,13 +835,36 @@
               <div><div class="review-name">Sarah L.</div><div class="review-location">Tel Aviv, Israel</div></div>
             </div>
           </div>
-
           <div class="review-card" data-review-lang="en">
             <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
             <p class="review-text">"We've tried everything to get our kids to help around the house. This app finally worked! Simple, intuitive, and the kids love it."</p>
             <div class="review-author">
               <div class="review-avatar" style="background:#D0E8FF;">👨</div>
               <div><div class="review-name">Michael T.</div><div class="review-location">Jerusalem, Israel</div></div>
+            </div>
+          </div>
+          <div class="review-card" data-review-lang="en">
+            <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"My daughter asks every morning what tasks she can do today. Before this app, getting her to do anything was a battle. Highly recommend!"</p>
+            <div class="review-author">
+              <div class="review-avatar" style="background:#E8D0FF;">👩</div>
+              <div><div class="review-name">Anna K.</div><div class="review-location">Haifa, Israel</div></div>
+            </div>
+          </div>
+          <div class="review-card" data-review-lang="en">
+            <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"Three kids, no more arguments about who did what. Everything is tracked, everything is fair. The kids trust the system more than they trust us!"</p>
+            <div class="review-author">
+              <div class="review-avatar" style="background:#D0FFE8;">👨</div>
+              <div><div class="review-name">David R.</div><div class="review-location">Netanya, Israel</div></div>
+            </div>
+          </div>
+          <div class="review-card" data-review-lang="en">
+            <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"Love that I can create custom rewards. My son is saving points for a trip to the waterpark — best motivation ever. This app is brilliant!"</p>
+            <div class="review-author">
+              <div class="review-avatar" style="background:#FFF0D0;">👩</div>
+              <div><div class="review-name">Lisa M.</div><div class="review-location">Beer Sheva, Israel</div></div>
             </div>
           </div>
 
@@ -888,17 +949,18 @@
     let visibleCards = [];
 
     function updateReviewsForLang(lang) {
-      const map = { he: 'he', en: 'en', ru: 'ru' };
-      const target = map[lang] || 'ru';
+      const target = ['ru','en','he'].includes(lang) ? lang : 'ru';
       visibleCards = allCards.filter(c => c.dataset.reviewLang === target);
       currentIndex = 0;
       renderSlider();
     }
 
     function renderSlider() {
-      allCards.forEach(c => c.style.display = 'none');
-      visibleCards.forEach(c => c.style.display = 'block');
+      // Hide all, show only visible language cards
+      allCards.forEach(c => { c.style.display = 'none'; c.style.minWidth = ''; });
+      visibleCards.forEach(c => { c.style.display = 'block'; c.style.minWidth = '100%'; });
 
+      // Update dots
       const dotsEl = document.getElementById('sliderDots');
       dotsEl.innerHTML = '';
       visibleCards.forEach((_, i) => {
@@ -908,17 +970,22 @@
         dotsEl.appendChild(d);
       });
 
-      const cardW = 316;
-      track.style.transform = `translateX(-${currentIndex * cardW}px)`;
+      // Move track — only count visible cards offset
+      const sliderWidth = document.querySelector('.reviews-slider').offsetWidth;
+      track.style.transform = `translateX(-${currentIndex * sliderWidth}px)`;
     }
 
     function moveSlider(dir) {
+      if (visibleCards.length === 0) return;
       currentIndex = (currentIndex + dir + visibleCards.length) % visibleCards.length;
       renderSlider();
     }
 
     // Auto-slide
-    setInterval(() => moveSlider(1), 4000);
+    setInterval(() => moveSlider(1), 4500);
+
+    // Re-render on resize
+    window.addEventListener('resize', () => renderSlider());
 
     // SCROLL ANIMATIONS
     const observer = new IntersectionObserver(entries => {
