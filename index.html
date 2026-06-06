@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -376,10 +376,12 @@
       overflow: hidden;
       max-width: 680px;
       margin: 0 auto;
+      direction: ltr;
     }
     .reviews-track {
       display: flex;
       transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      direction: ltr;
     }
     .review-card {
       background: white;
@@ -391,6 +393,9 @@
       flex-shrink: 0;
       position: relative;
       box-sizing: border-box;
+      word-wrap: break-word;
+      white-space: normal;
+      overflow-wrap: break-word;
     }
     .review-card::before {
       content: '"';
@@ -404,16 +409,7 @@
     }
     .review-stars { display: flex; gap: 3px; margin-bottom: 0.8rem; }
     .review-stars .star { font-size: 1rem; }
-    .review-text {
-  font-size: 0.92rem;
-  color: var(--text);
-  line-height: 1.6;
-  margin-bottom: 1.2rem;
-  font-style: italic;
-  word-wrap: break-word;
-  white-space: normal;
-  overflow-wrap: break-word;
-}
+    .review-text { font-size: 0.92rem; color: var(--text); line-height: 1.6; margin-bottom: 1.2rem; font-style: italic; }
     .review-author { display: flex; align-items: center; gap: 0.8rem; }
     .review-avatar {
       width: 44px; height: 44px;
@@ -946,7 +942,7 @@
       }
       document.querySelectorAll('.lang-btn').forEach(btn => {
         const t = btn.textContent.trim().toLowerCase();
-        btn.classList.toggle('active', t === lang || (lang === 'he' && t === 'עב'));
+        btn.classList.toggle('active', t === lang || (lang === 'he' && btn.textContent.includes('עברית')));
       });
       updateReviewsForLang(lang);
     }
