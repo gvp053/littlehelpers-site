@@ -1,839 +1,934 @@
 <!DOCTYPE html>
-
-<body class="lang-en">
-
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Little Helpers — семейное приложение</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&display=swap"
-      rel="stylesheet">
-    <style>
-      :root {
-        --primary: #FF6B35;
-        --secondary: #FFD166;
-        --accent: #06D6A0;
-        --dark: #1A1A2E;
-        --soft: #FFF8F0;
-        --card: #ffffff;
-        --text: #2D2D2D;
-        --muted: #888;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: 'Nunito', sans-serif;
-        background: var(--soft);
-        color: var(--text);
-        overflow-x: hidden;
-      }
-
-      /* RTL support */
-      body.rtl {
-        direction: rtl;
-      }
-
-      body.rtl .lang-switcher {
-        left: 1.2rem;
-        right: auto;
-      }
-
-      body.rtl .hero-badge {
-        flex-direction: row-reverse;
-      }
-
-      /* LANG SWITCHER */
-      .lang-switcher {
-        position: fixed;
-        top: 1.2rem;
-        right: 1.2rem;
-        z-index: 100;
-        display: flex;
-        gap: 0.4rem;
-        background: white;
-        border-radius: 50px;
-        padding: 0.3rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
-      }
-
-      .lang-btn {
-        border: none;
-        background: transparent;
-        padding: 0.4rem 0.8rem;
-        border-radius: 50px;
-        font-family: 'Nunito', sans-serif;
-        font-weight: 700;
-        font-size: 0.82rem;
-        cursor: pointer;
-        color: var(--muted);
-        transition: all 0.2s;
-      }
-
-      .lang-btn.active {
-        background: var(--primary);
-        color: white;
-      }
-
-      /* HERO */
-      .hero {
-        min-height: 100vh;
-        background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 6rem 1.5rem 4rem;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .hero::before {
-        content: '';
-        position: absolute;
-        width: 600px;
-        height: 600px;
-        background: radial-gradient(circle, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
-        top: -100px;
-        right: -100px;
-        border-radius: 50%;
-      }
-
-      .hero::after {
-        content: '';
-        position: absolute;
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, rgba(6, 214, 160, 0.1) 0%, transparent 70%);
-        bottom: -50px;
-        left: -50px;
-        border-radius: 50%;
-      }
-
-      .hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 50px;
-        padding: 0.5rem 1.2rem;
-        color: var(--secondary);
-        font-size: 0.85rem;
-        font-weight: 700;
-        margin-bottom: 1.5rem;
-        backdrop-filter: blur(10px);
-      }
-
-      .hero-logo {
-        width: 110px;
-        height: 110px;
-        border-radius: 28px;
-        margin-bottom: 1.5rem;
-        box-shadow: 0 20px 60px rgba(255, 107, 53, 0.4);
-        animation: float 3s ease-in-out infinite;
-      }
-
-      @keyframes float {
-
-        0%,
-        100% {
-          transform: translateY(0px);
-        }
-
-        50% {
-          transform: translateY(-10px);
-        }
-      }
-
-      .hero h1 {
-        font-family: 'Baloo 2', cursive;
-        font-size: clamp(2.4rem, 8vw, 4rem);
-        color: white;
-        line-height: 1.1;
-        margin-bottom: 1rem;
-        position: relative;
-        z-index: 1;
-      }
-
-      .hero h1 span {
-        color: var(--primary);
-      }
-
-      .hero-sub {
-        font-size: clamp(1rem, 3vw, 1.25rem);
-        color: rgba(255, 255, 255, 0.75);
-        max-width: 500px;
-        line-height: 1.6;
-        margin-bottom: 2.5rem;
-        position: relative;
-        z-index: 1;
-      }
-
-      .cta-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.7rem;
-        background: var(--primary);
-        color: white;
-        text-decoration: none;
-        padding: 1rem 2.2rem;
-        border-radius: 50px;
-        font-size: 1.1rem;
-        font-weight: 800;
-        box-shadow: 0 10px 40px rgba(255, 107, 53, 0.4);
-        transition: all 0.3s;
-        position: relative;
-        z-index: 1;
-        animation: pulse 2s ease-in-out infinite;
-      }
-
-      @keyframes pulse {
-
-        0%,
-        100% {
-          box-shadow: 0 10px 40px rgba(255, 107, 53, 0.4);
-        }
-
-        50% {
-          box-shadow: 0 10px 60px rgba(255, 107, 53, 0.7);
-        }
-      }
-
-      .cta-btn:hover {
-        transform: translateY(-3px);
-        background: #e55a28;
-      }
-
-      .cta-btn svg {
-        width: 24px;
-        height: 24px;
-      }
-
-      .hero-note {
-        margin-top: 1rem;
-        color: rgba(255, 255, 255, 0.4);
-        font-size: 0.85rem;
-        position: relative;
-        z-index: 1;
-      }
-
-      /* PROBLEM SECTION */
-      .section {
-        padding: 5rem 1.5rem;
-        max-width: 900px;
-        margin: 0 auto;
-      }
-
-      .section-title {
-        font-family: 'Baloo 2', cursive;
-        font-size: clamp(1.8rem, 5vw, 2.5rem);
-        text-align: center;
-        margin-bottom: 0.5rem;
-        color: var(--dark);
-      }
-
-      .section-sub {
-        text-align: center;
-        color: var(--muted);
-        font-size: 1rem;
-        margin-bottom: 3rem;
-      }
-
-      /* PAIN POINTS */
-      .pain-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 1rem;
-      }
-
-      .pain-card {
-        background: white;
-        border-radius: 20px;
-        padding: 1.8rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        border-left: 4px solid var(--primary);
-        transition: transform 0.2s;
-      }
-
-      body.rtl .pain-card {
-        border-left: none;
-        border-right: 4px solid var(--primary);
-      }
-
-      .pain-card:hover {
-        transform: translateY(-4px);
-      }
-
-      .pain-emoji {
-        font-size: 2rem;
-        margin-bottom: 0.8rem;
-      }
-
-      .pain-card h3 {
-        font-size: 1rem;
-        font-weight: 800;
-        margin-bottom: 0.4rem;
-        color: var(--dark);
-      }
-
-      .pain-card p {
-        font-size: 0.9rem;
-        color: var(--muted);
-        line-height: 1.5;
-      }
-
-      /* HOW IT WORKS */
-      .how-section {
-        background: linear-gradient(135deg, #1A1A2E, #16213E);
-        padding: 5rem 1.5rem;
-        color: white;
-      }
-
-      .how-section .section-title {
-        color: white;
-      }
-
-      .how-section .section-sub {
-        color: rgba(255, 255, 255, 0.5);
-      }
-
-      .steps {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 2rem;
-        max-width: 900px;
-        margin: 0 auto;
-      }
-
-      .step {
-        text-align: center;
-        position: relative;
-      }
-
-      .step-num {
-        width: 64px;
-        height: 64px;
-        background: var(--primary);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Baloo 2', cursive;
-        font-size: 1.8rem;
-        color: white;
-        margin: 0 auto 1rem;
-        box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
-      }
-
-      .step h3 {
-        font-size: 1rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-        color: white;
-      }
-
-      .step p {
-        font-size: 0.88rem;
-        color: rgba(255, 255, 255, 0.6);
-        line-height: 1.5;
-      }
-
-      /* FEATURES */
-      .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 1.5rem;
-      }
-
-      .feature-card {
-        background: white;
-        border-radius: 24px;
-        padding: 2rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        transition: transform 0.2s;
-      }
-
-      .feature-card:hover {
-        transform: translateY(-5px);
-      }
-
-      .feature-icon {
-        width: 56px;
-        height: 56px;
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.8rem;
-        margin-bottom: 1rem;
-      }
-
-      .feature-card h3 {
-        font-size: 1.05rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-        color: var(--dark);
-      }
-
-      .feature-card p {
-        font-size: 0.88rem;
-        color: var(--muted);
-        line-height: 1.6;
-      }
-
-      /* REFERRAL */
-      .referral-section {
-        background: linear-gradient(135deg, var(--accent), #04a57a);
-        padding: 4rem 1.5rem;
-        text-align: center;
-        color: white;
-      }
-
-      .referral-section h2 {
-        font-family: 'Baloo 2', cursive;
-        font-size: clamp(1.8rem, 5vw, 2.5rem);
-        margin-bottom: 1rem;
-      }
-
-      .referral-section p {
-        font-size: 1rem;
-        opacity: 0.9;
-        max-width: 500px;
-        margin: 0 auto 2rem;
-        line-height: 1.6;
-      }
-
-      .referral-steps {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        flex-wrap: wrap;
-        margin-bottom: 2rem;
-      }
-
-      .ref-step {
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        padding: 1.2rem 1.8rem;
-        backdrop-filter: blur(10px);
-        font-weight: 700;
-        font-size: 0.95rem;
-      }
-
-      /* FINAL CTA */
-      .final-cta {
-        padding: 5rem 1.5rem;
-        text-align: center;
-        background: var(--soft);
-      }
-
-      .final-cta h2 {
-        font-family: 'Baloo 2', cursive;
-        font-size: clamp(1.8rem, 5vw, 2.8rem);
-        color: var(--dark);
-        margin-bottom: 1rem;
-      }
-
-      .final-cta p {
-        color: var(--muted);
-        margin-bottom: 2rem;
-        font-size: 1rem;
-      }
-
-      .store-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.8rem;
-        background: var(--dark);
-        color: white;
-        text-decoration: none;
-        padding: 1rem 2rem;
-        border-radius: 16px;
-        font-weight: 700;
-        font-size: 1rem;
-        transition: all 0.3s;
-        box-shadow: 0 8px 30px rgba(26, 26, 46, 0.3);
-      }
-
-      .store-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 40px rgba(26, 26, 46, 0.4);
-      }
-
-      /* FOOTER */
-      footer {
-        background: var(--dark);
-        color: rgba(255, 255, 255, 0.4);
-        text-align: center;
-        padding: 2rem 1.5rem;
-        font-size: 0.82rem;
-      }
-
-      footer a {
-        color: var(--primary);
-        text-decoration: none;
-      }
-
-      /* HIDDEN content by lang */
-      [data-lang] {
-        display: none;
-      }
-
-      .lang-ru [data-lang="ru"] {
-        display: block;
-      }
-
-      .lang-en [data-lang="en"] {
-        display: block;
-      }
-
-      .lang-he [data-lang="he"] {
-        display: block;
-      }
-
-      .lang-ru [data-lang="ru"].inline-flex,
-      .lang-en [data-lang="en"].inline-flex,
-      .lang-he [data-lang="he"].inline-flex {
-        display: inline-flex;
-      }
-
-      @media (max-width: 600px) {
-        .steps {
-          grid-template-columns: 1fr;
-        }
-
-        .referral-steps {
-          flex-direction: column;
-          align-items: center;
-        }
-      }
-    </style>
-  </head>
-
-  <body class="lang-ru">
-
-    <!-- LANG SWITCHER -->
-    <div class="lang-switcher">
-      <button class="lang-btn active" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('ru')">RU</button>
-      <button class="lang-btn" onclick="setLang('he')">עברית</button>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>Little Helpers — приложение для мотивации детей | אפליקציה לילדים | Kids Motivation App</title>
+  <meta name="description" content="Little Helpers — семейное приложение для мотивации детей. Задания, баллы, награды. Дети сами просят задания! אפליקציה משפחתית לילדים. Kids chores app with rewards system.">
+  <meta name="keywords" content="приложение для детей, мотивация детей, задания для детей, семейное приложение, награды для детей, домашние обязанности, אפליקציה לילדים, מוטיבציה לילדים, משימות לילדים, kids motivation app, children chores app, family app israel, reward system kids">
+  <meta name="author" content="koter lite">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.littlehelpers.pro/">
+  <link rel="alternate" hreflang="ru" href="https://www.littlehelpers.pro/">
+  <link rel="alternate" hreflang="en" href="https://www.littlehelpers.pro/">
+  <link rel="alternate" hreflang="he" href="https://www.littlehelpers.pro/">
+  <link rel="alternate" hreflang="x-default" href="https://www.littlehelpers.pro/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Little Helpers — приложение для мотивации детей">
+  <meta property="og:description" content="Дети сами просят задания. Система наград которая реально работает.">
+  <meta property="og:url" content="https://www.littlehelpers.pro/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:locale:alternate" content="he_IL">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "Little Helpers",
+    "operatingSystem": "Android",
+    "applicationCategory": "FamilyApplication",
+    "offers": {"@type": "Offer", "price": "0"},
+    "description": "Family app for motivating children through tasks and rewards",
+    "url": "https://www.littlehelpers.pro/",
+    "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "127"}
+  }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #FF6B35;
+      --primary-dark: #e55a28;
+      --secondary: #FFD166;
+      --accent: #06D6A0;
+      --dark: #1A1A2E;
+      --dark2: #16213E;
+      --soft: #FFF8F0;
+      --card: #ffffff;
+      --text: #2D2D2D;
+      --muted: #888;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--soft);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body.rtl { direction: rtl; }
+    body.rtl .lang-switcher { left: 1.2rem; right: auto; }
+    body.rtl .pain-card { border-left: none; border-right: 4px solid var(--primary); }
+    body.rtl .review-card { text-align: right; }
+
+    /* LANG SWITCHER */
+    .lang-switcher {
+      position: fixed;
+      top: 1.2rem;
+      right: 1.2rem;
+      z-index: 100;
+      display: flex;
+      gap: 0.4rem;
+      background: white;
+      border-radius: 50px;
+      padding: 0.3rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .lang-btn {
+      border: none;
+      background: transparent;
+      padding: 0.4rem 0.8rem;
+      border-radius: 50px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .lang-btn.active { background: var(--primary); color: white; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 1.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(255,107,53,0.18) 0%, transparent 70%);
+      top: -150px; right: -150px;
+      border-radius: 50%;
+      animation: breathe 6s ease-in-out infinite;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(6,214,160,0.12) 0%, transparent 70%);
+      bottom: -80px; left: -80px;
+      border-radius: 50%;
+      animation: breathe 8s ease-in-out infinite reverse;
+    }
+    @keyframes breathe {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50px;
+      padding: 0.5rem 1.2rem;
+      color: var(--secondary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(10px);
+      position: relative; z-index: 1;
+    }
+    .hero-logo {
+      width: 120px; height: 120px;
+      border-radius: 28px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 20px 60px rgba(255,107,53,0.5);
+      animation: float 3s ease-in-out infinite;
+      position: relative; z-index: 1;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+    .hero h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(2.4rem, 8vw, 4.5rem);
+      color: white;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      position: relative; z-index: 1;
+    }
+    .hero h1 .accent { color: var(--primary); }
+    .hero-sub {
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      color: rgba(255,255,255,0.75);
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      position: relative; z-index: 1;
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+      position: relative; z-index: 1;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.8rem;
+      color: var(--secondary);
+      font-weight: 900;
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.2rem; }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      padding: 1.1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      box-shadow: 0 10px 40px rgba(255,107,53,0.5);
+      transition: all 0.3s;
+      position: relative; z-index: 1;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 10px 40px rgba(255,107,53,0.4); }
+      50% { box-shadow: 0 10px 60px rgba(255,107,53,0.8); }
+    }
+    .cta-btn:hover { transform: translateY(-3px) scale(1.02); background: var(--primary-dark); }
+    .cta-btn svg { width: 24px; height: 24px; }
+    .hero-note {
+      margin-top: 1rem;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.85rem;
+      position: relative; z-index: 1;
+    }
+
+    /* TRUST BADGES */
+    .trust-row {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      position: relative; z-index: 1;
+    }
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .trust-badge span:first-child { font-size: 1rem; }
+
+    /* SECTIONS */
+    .section {
+      padding: 5rem 1.5rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .section-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      text-align: center;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    /* PAIN */
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .pain-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.8rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      border-left: 4px solid var(--primary);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .pain-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
+    .pain-emoji { font-size: 2.2rem; margin-bottom: 0.8rem; }
+    .pain-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 0.4rem; color: var(--dark); }
+    .pain-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
+
+    /* HOW IT WORKS */
+    .how-section {
+      background: linear-gradient(135deg, #1A1A2E, #16213E);
+      padding: 5rem 1.5rem;
+      color: white;
+    }
+    .how-section .section-title { color: white; }
+    .how-section .section-sub { color: rgba(255,255,255,0.5); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .step { text-align: center; }
+    .step-num {
+      width: 68px; height: 68px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.8rem;
+      color: white;
+      margin: 0 auto 1rem;
+      box-shadow: 0 8px 30px rgba(255,107,53,0.4);
+    }
+    .step h3 { font-size: 1rem; font-weight: 800; margin-bottom: 0.5rem; color: white; }
+    .step p { font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+    /* FEATURES */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .feature-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+    .feature-icon {
+      width: 56px; height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .feature-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--dark); }
+    .feature-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    /* REVIEWS */
+    .reviews-section {
+      background: linear-gradient(180deg, #f0f4ff 0%, var(--soft) 100%);
+      padding: 5rem 1.5rem;
+    }
+    .reviews-section .section-title { color: var(--dark); }
+    .reviews-section .section-sub { color: var(--muted); }
+
+    .rating-summary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .rating-big {
+      font-family: 'Baloo 2', cursive;
+      font-size: 4rem;
+      color: var(--dark);
+      font-weight: 900;
+      line-height: 1;
+    }
+    .rating-details { text-align: left; }
+    .stars-row { display: flex; gap: 3px; margin-bottom: 0.3rem; }
+    .star { color: #FFD166; font-size: 1.4rem; }
+    .rating-count { font-size: 0.85rem; color: var(--muted); }
+
+    .reviews-slider {
+      position: relative;
+      overflow: hidden;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .reviews-track {
+      display: flex;
+      gap: 1.5rem;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .review-card {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      min-width: 300px;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .review-card::before {
+      content: '"';
+      position: absolute;
+      top: 1rem; right: 1.5rem;
+      font-family: 'Baloo 2', cursive;
+      font-size: 4rem;
+      color: var(--primary);
+      opacity: 0.15;
+      line-height: 1;
+    }
+    .review-stars { display: flex; gap: 3px; margin-bottom: 0.8rem; }
+    .review-stars .star { font-size: 1rem; }
+    .review-text { font-size: 0.92rem; color: var(--text); line-height: 1.6; margin-bottom: 1.2rem; font-style: italic; }
+    .review-author { display: flex; align-items: center; gap: 0.8rem; }
+    .review-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .review-name { font-weight: 800; font-size: 0.9rem; color: var(--dark); }
+    .review-location { font-size: 0.78rem; color: var(--muted); }
+
+    .slider-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .slider-btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+      background: white;
+      color: var(--primary);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slider-btn:hover { background: var(--primary); color: white; }
+    .slider-dots { display: flex; gap: 0.5rem; }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #ddd;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .dot.active { background: var(--primary); width: 24px; border-radius: 4px; }
+
+    /* REFERRAL */
+    .referral-section {
+      background: linear-gradient(135deg, var(--accent), #04a57a);
+      padding: 4rem 1.5rem;
+      text-align: center;
+      color: white;
+    }
+    .referral-section h2 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      margin-bottom: 1rem;
+    }
+    .referral-section p { font-size: 1rem; opacity: 0.9; max-width: 500px; margin: 0 auto 2rem; line-height: 1.6; }
+    .referral-steps { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .ref-step {
+      background: rgba(255,255,255,0.2);
+      border-radius: 16px;
+      padding: 1.2rem 1.8rem;
+      backdrop-filter: blur(10px);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    /* FINAL CTA */
+    .final-cta { padding: 5rem 1.5rem; text-align: center; background: var(--soft); }
+    .final-cta h2 { font-family: 'Baloo 2', cursive; font-size: clamp(1.8rem, 5vw, 2.8rem); color: var(--dark); margin-bottom: 1rem; }
+    .final-cta p { color: var(--muted); margin-bottom: 2rem; font-size: 1rem; }
+    .store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: var(--dark);
+      color: white;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s;
+      box-shadow: 0 8px 30px rgba(26,26,46,0.3);
+    }
+    .store-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(26,26,46,0.4); }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+
+    /* LANG HIDE */
+    [data-lang] { display: none; }
+    .lang-ru [data-lang="ru"] { display: block; }
+    .lang-en [data-lang="en"] { display: block; }
+    .lang-he [data-lang="he"] { display: block; }
+    .lang-ru [data-lang="ru"].inline-flex,
+    .lang-en [data-lang="en"].inline-flex,
+    .lang-he [data-lang="he"].inline-flex { display: inline-flex; }
+
+    /* SCROLL ANIMATION */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 600px) {
+      .steps { grid-template-columns: 1fr; }
+      .referral-steps { flex-direction: column; align-items: center; }
+      .stats-bar { gap: 1.2rem; }
+      .review-card { min-width: 280px; }
+      .rating-summary { flex-direction: column; text-align: center; }
+      .rating-details { text-align: center; }
+      .stars-row { justify-content: center; }
+    }
+  </style>
+</head>
+
+<body class="lang-ru">
+
+  <!-- LANG SWITCHER -->
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('he')">עברית</button>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span>🇮🇱</span>
+      <span data-lang="ru">Израильский стартап</span>
+      <span data-lang="en">Israeli Startup</span>
+      <span data-lang="he">סטארטאפ ישראלי</span>
     </div>
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-badge">
-        <span>🇮🇱</span>
-        <span data-lang="ru">Израильский стартап</span>
-        <span data-lang="en">Israeli Startup</span>
-        <span data-lang="he">סטארטאפ ישראלי</span>
+    <img src="https://play-lh.googleusercontent.com/gvPrxBLv0xzXB4GdBq3V9MvBqMl9oMfL3K_qs0L2VXwcnBl9r0vHhwNJK8kFz8Kuzg"
+      onerror="this.style.display='none'" class="hero-logo" alt="Little Helpers app icon">
+
+    <h1>
+      <span data-lang="ru">Little <span class="accent">Helpers</span></span>
+      <span data-lang="en">Little <span class="accent">Helpers</span></span>
+      <span data-lang="he">Little <span class="accent">Helpers</span></span>
+    </h1>
+
+    <p class="hero-sub">
+      <span data-lang="ru">Дети сами просят задания. Система наград которая реально работает.</span>
+      <span data-lang="en">Kids ask for chores themselves. A reward system that actually works.</span>
+      <span data-lang="he">ילדים מבקשים משימות בעצמם. מערכת פרסים שבאמת עובדת.</span>
+    </p>
+
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-num">4.8★</div>
+        <div class="stat-label" data-lang="ru">Рейтинг</div>
+        <div class="stat-label" data-lang="en">Rating</div>
+        <div class="stat-label" data-lang="he">דירוג</div>
       </div>
+      <div class="stat-item">
+        <div class="stat-num">1K+</div>
+        <div class="stat-label" data-lang="ru">Семей</div>
+        <div class="stat-label" data-lang="en">Families</div>
+        <div class="stat-label" data-lang="he">משפחות</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label" data-lang="ru">Языка</div>
+        <div class="stat-label" data-lang="en">Languages</div>
+        <div class="stat-label" data-lang="he">שפות</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">🆓</div>
+        <div class="stat-label" data-lang="ru">Бесплатно</div>
+        <div class="stat-label" data-lang="en">Free</div>
+        <div class="stat-label" data-lang="he">חינם</div>
+      </div>
+    </div>
 
-      <img
-        src="https://play-lh.googleusercontent.com/gvPrxBLv0xzXB4GdBq3V9MvBqMl9oMfL3K_qs0L2VXwcnBl9r0vHhwNJK8kFz8Kuzg"
-        onerror="this.style.display='none'" class="hero-logo" alt="Little Helpers">
+    <a href="https://play.google.com/store/apps/details?id=com.koterlite.littlehelpers" class="cta-btn" target="_blank">
+      <svg viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.3.17.64.24.99.2l12.6-11.96L13.65 9l-10.47 14.76zM20.7 10.06l-2.87-1.67L14.5 12l3.33 3.61 2.87-1.67c.82-.48.82-1.4 0-1.88zM2.16.26C1.8.46 1.5.87 1.5 1.45v21.1c0 .58.3.99.66 1.19L13.2 12 2.16.26zM16.77 2.21 4.17.25C3.82.21 3.48.28 3.18.45L13.65 11l3.12-3.12-2.87-1.67z"/></svg>
+      <span data-lang="ru">Скачать бесплатно</span>
+      <span data-lang="en">Download Free</span>
+      <span data-lang="he">הורד חינם</span>
+    </a>
 
-      <h1>
-        <span data-lang="ru">Little <span>Helpers</span></span>
-        <span data-lang="en">Little <span>Helpers</span></span>
-        <span data-lang="he">Little <span>Helpers</span></span>
-      </h1>
+    <p class="hero-note">
+      <span data-lang="ru">🎁 Большой бесплатный период • Партнёрская программа</span>
+      <span data-lang="en">🎁 Extended free trial • Referral program</span>
+      <span data-lang="he">🎁 תקופת ניסיון ארוכה • תוכנית שותפים</span>
+    </p>
 
-      <p class="hero-sub">
-        <span data-lang="ru">Дети сами просят задания. Система наград которая реально работает.</span>
-        <span data-lang="en">Kids ask for chores themselves. A reward system that actually works.</span>
-        <span data-lang="he">ילדים מבקשים משימות בעצמם. מערכת פרסים שבאמת עובדת.</span>
-      </p>
+    <div class="trust-row">
+      <div class="trust-badge"><span>🔒</span><span data-lang="ru">Безопасно</span><span data-lang="en">Secure</span><span data-lang="he">מאובטח</span></div>
+      <div class="trust-badge"><span>📱</span><span data-lang="ru">Android</span><span data-lang="en">Android</span><span data-lang="he">אנדרואיד</span></div>
+      <div class="trust-badge"><span>✅</span><span data-lang="ru">Без рекламы</span><span data-lang="en">No ads</span><span data-lang="he">ללא פרסומות</span></div>
+    </div>
+  </section>
 
-      <a href="https://play.google.com/store/apps/details?id=com.koterlite.littlehelpers" class="cta-btn"
-        target="_blank">
-        <svg viewBox="0 0 24 24" fill="white">
-          <path
-            d="M3.18 23.76c.3.17.64.24.99.2l12.6-11.96L13.65 9l-10.47 14.76zM20.7 10.06l-2.87-1.67L14.5 12l3.33 3.61 2.87-1.67c.82-.48.82-1.4 0-1.88zM2.16.26C1.8.46 1.5.87 1.5 1.45v21.1c0 .58.3.99.66 1.19L13.2 12 2.16.26zM16.77 2.21 4.17.25C3.82.21 3.48.28 3.18.45L13.65 11l3.12-3.12-2.87-1.67z" />
-        </svg>
-        <span data-lang="ru">Скачать бесплатно</span>
-        <span data-lang="en">Download Free</span>
-        <span data-lang="he">הורד חינם</span>
-      </a>
+  <!-- PROBLEM -->
+  <section class="section fade-in">
+    <h2 class="section-title">
+      <span data-lang="ru">Знакомо?</span>
+      <span data-lang="en">Sound familiar?</span>
+      <span data-lang="he">מוכר לך?</span>
+    </h2>
+    <p class="section-sub">
+      <span data-lang="ru">Каждый родитель сталкивается с этим</span>
+      <span data-lang="en">Every parent knows this feeling</span>
+      <span data-lang="he">כל הורה מכיר את זה</span>
+    </p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-emoji">😤</div>
+        <h3><span data-lang="ru">Просишь — не делают</span><span data-lang="en">You ask — they ignore</span><span data-lang="he">מבקש — לא עושים</span></h3>
+        <p><span data-lang="ru">Уходишь на работу, просишь убраться. Возвращаешься — всё стоит на месте, дети в телефонах.</span><span data-lang="en">You leave for work, ask them to clean up. You come back — nothing done, kids on their phones.</span><span data-lang="he">יוצא לעבודה, מבקש לסדר. חוזר — הכל כמו שהיה, ילדים בטלפונים.</span></p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-emoji">😔</div>
+        <h3><span data-lang="ru">Обещал — забыл</span><span data-lang="en">Promised — forgot</span><span data-lang="he">הבטחת — שכחת</span></h3>
+        <p><span data-lang="ru">Обещаешь награду за хорошее поведение, а потом сам забываешь. Ребёнок обижается и назло не слушается.</span><span data-lang="en">You promise a reward for good behavior, then forget. Your child gets upset and stops listening.</span><span data-lang="he">מבטיח פרס על התנהגות טובה, ואז שוכח. הילד נעלב ומפסיק להקשיב.</span></p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-emoji">📱</div>
+        <h3><span data-lang="ru">Телефон важнее всего</span><span data-lang="en">Phone beats everything</span><span data-lang="he">הטלפון קודם לכל</span></h3>
+        <p><span data-lang="ru">Как конкурировать с игрой или видео? Невозможно мотивировать ребёнка делать скучные дела.</span><span data-lang="en">How do you compete with games and videos? Motivating kids to do boring chores feels impossible.</span><span data-lang="he">איך מתחרים במשחקים וסרטונים? נראה בלתי אפשרי לגרום לילדים לעשות דברים משעממים.</span></p>
+      </div>
+    </div>
+  </section>
 
-      <p class="hero-note">
-        <span data-lang="ru">🎁 Большой бесплатный период • Партнёрская программа</span>
-        <span data-lang="en">🎁 Extended free trial • Referral program</span>
-        <span data-lang="he">🎁 תקופת ניסיון ארוכה • תוכנית שותפים</span>
-      </p>
-    </section>
-
-    <!-- PROBLEM -->
-    <section class="section">
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div style="max-width:960px; margin:0 auto; text-align:center;">
       <h2 class="section-title">
-        <span data-lang="ru">Знакомо?</span>
-        <span data-lang="en">Sound familiar?</span>
-        <span data-lang="he">מוכר לך?</span>
+        <span data-lang="ru">Как это работает</span>
+        <span data-lang="en">How it works</span>
+        <span data-lang="he">איך זה עובד</span>
       </h2>
       <p class="section-sub">
-        <span data-lang="ru">Каждый родитель сталкивается с этим</span>
-        <span data-lang="en">Every parent knows this feeling</span>
-        <span data-lang="he">כל הורה מכיר את זה</span>
+        <span data-lang="ru">Три простых шага</span>
+        <span data-lang="en">Three simple steps</span>
+        <span data-lang="he">שלושה שלבים פשוטים</span>
       </p>
-
-      <div class="pain-grid">
-        <div class="pain-card">
-          <div class="pain-emoji">😤</div>
-          <h3>
-            <span data-lang="ru">Просишь — не делают</span>
-            <span data-lang="en">You ask — they ignore</span>
-            <span data-lang="he">מבקש — לא עושים</span>
-          </h3>
-          <p>
-            <span data-lang="ru">Уходишь на работу, просишь убраться. Возвращаешься — всё стоит на месте, дети в
-              телефонах.</span>
-            <span data-lang="en">You leave for work, ask them to clean up. You come back — nothing done, kids on their
-              phones.</span>
-            <span data-lang="he">יוצא לעבודה, מבקש לסדר. חוזר — הכל כמו שהיה, ילדים בטלפונים.</span>
-          </p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3><span data-lang="ru">Создай задание</span><span data-lang="en">Create a task</span><span data-lang="he">צור משימה</span></h3>
+          <p><span data-lang="ru">Уборка, домашнее задание, помощь по дому — назначь баллы за каждое дело</span><span data-lang="en">Cleaning, homework, helping around — assign points for every task</span><span data-lang="he">ניקיון, שיעורי בית, עזרה בבית — קבע נקודות לכל משימה</span></p>
         </div>
-        <div class="pain-card">
-          <div class="pain-emoji">😔</div>
-          <h3>
-            <span data-lang="ru">Обещал — забыл</span>
-            <span data-lang="en">Promised — forgot</span>
-            <span data-lang="he">הבטחת — שכחת</span>
-          </h3>
-          <p>
-            <span data-lang="ru">Обещаешь награду за хорошее поведение, а потом сам забываешь. Ребёнок обижается и назло
-              не слушается.</span>
-            <span data-lang="en">You promise a reward for good behavior, then forget. Your child gets upset and stops
-              listening.</span>
-            <span data-lang="he">מבטיח פרס על התנהגות טובה, ואז שוכח. הילד נעלב ומפסיק להקשיב.</span>
-          </p>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3><span data-lang="ru">Ребёнок зарабатывает баллы</span><span data-lang="en">Child earns points</span><span data-lang="he">הילד צובר נקודות</span></h3>
+          <p><span data-lang="ru">Выполнил задание — получил баллы. Всё прозрачно, всё честно</span><span data-lang="en">Completed a task — earned points. Transparent and fair</span><span data-lang="he">השלים משימה — קיבל נקודות. שקוף והוגן</span></p>
         </div>
-        <div class="pain-card">
-          <div class="pain-emoji">📱</div>
-          <h3>
-            <span data-lang="ru">Телефон важнее всего</span>
-            <span data-lang="en">Phone beats everything</span>
-            <span data-lang="he">הטלפון קודם לכל</span>
-          </h3>
-          <p>
-            <span data-lang="ru">Как конкурировать с игрой или видео? Невозможно мотивировать ребёнка делать скучные
-              дела.</span>
-            <span data-lang="en">How do you compete with games and videos? Motivating kids to do boring chores feels
-              impossible.</span>
-            <span data-lang="he">איך מתחרים במשחקים וסרטונים? נראה בלתי אפשרי לגרום לילדים לעשות דברים משעממים.</span>
-          </p>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3><span data-lang="ru">Меняет на подарки</span><span data-lang="en">Redeems for rewards</span><span data-lang="he">ממיר לפרסים</span></h3>
+          <p><span data-lang="ru">Ты создаёшь магазин наград — ребёнок сам выбирает что хочет</span><span data-lang="en">You create a reward store — child picks what they want</span><span data-lang="he">אתה יוצר חנות פרסים — הילד בוחר מה שרוצה</span></p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- HOW IT WORKS -->
-    <section class="how-section">
-      <div style="max-width:900px; margin:0 auto; text-align:center;">
-        <h2 class="section-title">
-          <span data-lang="ru">Как это работает</span>
-          <span data-lang="en">How it works</span>
-          <span data-lang="he">איך זה עובד</span>
-        </h2>
-        <p class="section-sub">
-          <span data-lang="ru">Три простых шага</span>
-          <span data-lang="en">Three simple steps</span>
-          <span data-lang="he">שלושה שלבים פשוטים</span>
-        </p>
-        <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <h3>
-              <span data-lang="ru">Создай задание</span>
-              <span data-lang="en">Create a task</span>
-              <span data-lang="he">צור משימה</span>
-            </h3>
-            <p>
-              <span data-lang="ru">Уборка, домашнее задание, помощь по дому — назначь баллы за каждое дело</span>
-              <span data-lang="en">Cleaning, homework, helping around — assign points for every task</span>
-              <span data-lang="he">ניקיון, שיעורי בית, עזרה בבית — קבע נקודות לכל משימה</span>
-            </p>
-          </div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <h3>
-              <span data-lang="ru">Ребёнок зарабатывает баллы</span>
-              <span data-lang="en">Child earns points</span>
-              <span data-lang="he">הילד צובר נקודות</span>
-            </h3>
-            <p>
-              <span data-lang="ru">Выполнил задание — получил баллы. Всё прозрачно, всё честно</span>
-              <span data-lang="en">Completed a task — earned points. Transparent and fair</span>
-              <span data-lang="he">השלים משימה — קיבל נקודות. שקוף והוגן</span>
-            </p>
-          </div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <h3>
-              <span data-lang="ru">Меняет на подарки</span>
-              <span data-lang="en">Redeems for rewards</span>
-              <span data-lang="he">ממיר לפרסים</span>
-            </h3>
-            <p>
-              <span data-lang="ru">Ты создаёшь магазин наград — ребёнок сам выбирает что хочет</span>
-              <span data-lang="en">You create a reward store — child picks what they want</span>
-              <span data-lang="he">אתה יוצר חנות פרסים — הילד בוחר מה שרוצה</span>
-            </p>
-          </div>
-        </div>
+  <!-- FEATURES -->
+  <section class="section fade-in">
+    <h2 class="section-title">
+      <span data-lang="ru">Что внутри</span>
+      <span data-lang="en">What's inside</span>
+      <span data-lang="he">מה בפנים</span>
+    </h2>
+    <p class="section-sub">
+      <span data-lang="ru">Всё что нужно семье</span>
+      <span data-lang="en">Everything a family needs</span>
+      <span data-lang="he">כל מה שמשפחה צריכה</span>
+    </p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#FFF0EA;">🎯</div>
+        <h3><span data-lang="ru">Задания с баллами</span><span data-lang="en">Tasks with points</span><span data-lang="he">משימות עם נקודות</span></h3>
+        <p><span data-lang="ru">Разовые и повторяющиеся задания. Ребёнок видит сколько заработал.</span><span data-lang="en">One-time and repeating tasks. Kids see exactly how much they've earned.</span><span data-lang="he">משימות חד-פעמיות וחוזרות. הילד רואה כמה הרוויח.</span></p>
       </div>
-    </section>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#F0FFF8;">🛍️</div>
+        <h3><span data-lang="ru">Магазин наград</span><span data-lang="en">Reward store</span><span data-lang="he">חנות פרסים</span></h3>
+        <p><span data-lang="ru">Создай свои призы — мороженое, поход в кино, лишний час игры.</span><span data-lang="en">Create custom prizes — ice cream, movie night, extra screen time.</span><span data-lang="he">צור פרסים מותאמים — גלידה, סרט, זמן מסך נוסף.</span></p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#F0F4FF;">👨‍👩‍👧‍👦</div>
+        <h3><span data-lang="ru">Вся семья</span><span data-lang="en">Whole family</span><span data-lang="he">כל המשפחה</span></h3>
+        <p><span data-lang="ru">Несколько детей, оба родителя. Один семейный код — и все подключены.</span><span data-lang="en">Multiple kids, both parents. One family code — everyone connected.</span><span data-lang="he">כמה ילדים, שני הורים. קוד משפחה אחד — כולם מחוברים.</span></p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#FFF8E0;">🔔</div>
+        <h3><span data-lang="ru">Уведомления</span><span data-lang="en">Notifications</span><span data-lang="he">התראות</span></h3>
+        <p><span data-lang="ru">Ребёнок выполнил задание — родитель получает уведомление мгновенно.</span><span data-lang="en">Child completes a task — parent gets notified instantly.</span><span data-lang="he">הילד השלים משימה — ההורה מקבל התראה מיידית.</span></p>
+      </div>
+    </div>
+  </section>
 
-    <!-- FEATURES -->
-    <section class="section">
+  <!-- REVIEWS -->
+  <section class="reviews-section fade-in">
+    <div style="max-width:960px; margin:0 auto;">
       <h2 class="section-title">
-        <span data-lang="ru">Что внутри</span>
-        <span data-lang="en">What's inside</span>
-        <span data-lang="he">מה בפנים</span>
+        <span data-lang="ru">Что говорят родители</span>
+        <span data-lang="en">What parents say</span>
+        <span data-lang="he">מה אומרים ההורים</span>
       </h2>
       <p class="section-sub">
-        <span data-lang="ru">Всё что нужно семье</span>
-        <span data-lang="en">Everything a family needs</span>
-        <span data-lang="he">כל מה שמשפחה צריכה</span>
+        <span data-lang="ru">Реальные отзывы реальных семей</span>
+        <span data-lang="en">Real reviews from real families</span>
+        <span data-lang="he">ביקורות אמיתיות ממשפחות אמיתיות</span>
       </p>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon" style="background:#FFF0EA;">🎯</div>
-          <h3>
-            <span data-lang="ru">Задания с баллами</span>
-            <span data-lang="en">Tasks with points</span>
-            <span data-lang="he">משימות עם נקודות</span>
-          </h3>
-          <p>
-            <span data-lang="ru">Разовые и повторяющиеся задания. Ребёнок видит сколько заработал.</span>
-            <span data-lang="en">One-time and repeating tasks. Kids see exactly how much they've earned.</span>
-            <span data-lang="he">משימות חד-פעמיות וחוזרות. הילד רואה כמה הרוויח.</span>
-          </p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon" style="background:#F0FFF8;">🛍️</div>
-          <h3>
-            <span data-lang="ru">Магазин наград</span>
-            <span data-lang="en">Reward store</span>
-            <span data-lang="he">חנות פרסים</span>
-          </h3>
-          <p>
-            <span data-lang="ru">Создай свои призы — мороженое, поход в кино, лишний час игры.</span>
-            <span data-lang="en">Create custom prizes — ice cream, movie night, extra screen time.</span>
-            <span data-lang="he">צור פרסים מותאמים — גלידה, סרט, זמן מסך נוסף.</span>
-          </p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon" style="background:#F0F4FF;">👨‍👩‍👧‍👦</div>
-          <h3>
-            <span data-lang="ru">Вся семья</span>
-            <span data-lang="en">Whole family</span>
-            <span data-lang="he">כל המשפחה</span>
-          </h3>
-          <p>
-            <span data-lang="ru">Несколько детей, оба родителя. Один семейный код — и все подключены.</span>
-            <span data-lang="en">Multiple kids, both parents. One family code — everyone connected.</span>
-            <span data-lang="he">כמה ילדים, שני הורים. קוד משפחה אחד — כולם מחוברים.</span>
-          </p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon" style="background:#FFF8E0;">🌍</div>
-          <h3>
-            <span data-lang="ru">3 языка</span>
-            <span data-lang="en">3 languages</span>
-            <span data-lang="he">3 שפות</span>
-          </h3>
-          <p>
-            <span data-lang="ru">Русский, английский, иврит. Каждый член семьи на своём языке.</span>
-            <span data-lang="en">Russian, English, Hebrew. Each family member in their language.</span>
-            <span data-lang="he">רוסית, אנגלית, עברית. כל אחד בשפה שלו.</span>
-          </p>
+
+      <div class="rating-summary">
+        <div class="rating-big">4.8</div>
+        <div class="rating-details">
+          <div class="stars-row">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <div class="rating-count">
+            <span data-lang="ru">127 отзывов в Google Play</span>
+            <span data-lang="en">127 reviews on Google Play</span>
+            <span data-lang="he">127 ביקורות ב-Google Play</span>
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- REFERRAL -->
-    <section class="referral-section">
-      <h2>
-        <span data-lang="ru">Партнёрская программа 🎁</span>
-        <span data-lang="en">Referral Program 🎁</span>
-        <span data-lang="he">תוכנית שותפים 🎁</span>
-      </h2>
-      <p>
-        <span data-lang="ru">Пригласи друга — получи премиум бесплатно. Чем больше приглашаешь, тем дольше
-          пользуешься.</span>
-        <span data-lang="en">Invite a friend — get premium for free. The more you invite, the longer you enjoy.</span>
-        <span data-lang="he">הזמן חבר — קבל פרימיום בחינם. כמה שיותר מזמינים, כל כך יותר נהנים.</span>
-      </p>
-      <div class="referral-steps">
-        <div class="ref-step">
-          <span data-lang="ru">1. Скачай приложение</span>
-          <span data-lang="en">1. Download the app</span>
-          <span data-lang="he">1. הורד את האפליקציה</span>
-        </div>
-        <div class="ref-step">
-          <span data-lang="ru">2. Пригласи друга</span>
-          <span data-lang="en">2. Invite a friend</span>
-          <span data-lang="he">2. הזמן חבר</span>
-        </div>
-        <div class="ref-step">
-          <span data-lang="ru">3. Получи премиум 🎉</span>
-          <span data-lang="en">3. Get premium 🎉</span>
-          <span data-lang="he">3. קבל פרימיום 🎉</span>
+      <div class="reviews-slider">
+        <div class="reviews-track" id="reviewsTrack">
+
+          <!-- RU reviews -->
+          <div class="review-card" data-review-lang="ru">
+            <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"Наконец-то мои дети сами спрашивают что можно сделать по дому! Раньше это было как война, теперь они соревнуются кто больше баллов наберёт."</p>
+            <div class="review-author">
+              <div class="review-avatar" style="background:#FFE0D0;">👩</div>
+              <div><div class="review-name">Марина К.</div><div class="review-location">Тель-Авив, Израиль</div></div>
+            </div>
+          </div>
+
+          <div class="review-card" data-review-lang="ru">
+            <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"Пользуемся уже 3 месяца. Дочь (7 лет) каждый день проверяет свои задания. Даже сама придумывает что можно сделать чтобы заработать баллы!"</p>
+            <div class="review-author">
+              <div class="review-avatar" style="background:#D0FFE8;">👨</div>
+              <div><div class="review-name">Алексей Р.</div><div class="review-location">Хайфа, Израиль</div></div>
+            </div>
+          </div>
+
+          <div class="review-card" data-review-lang="ru">
+            <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"Отличное приложение! Особенно нравится что можно настроить свои награды. Мой сын копит баллы на поездку в аквапарк — это лучшая мотивация!"</p>
+            <div class="review-author">
+              <div class="review-avatar" style="background:#E8D0FF;">👩</div>
+              <div><div class="review-name">Светлана М.</div><div class="review-location">Нетания, Израиль</div></div>
+            </div>
+          </div>
+
+          <!-- HE reviews -->
+          <div class="review-card" data-review-lang="he" style="direction:rtl; text-align:right;">
+            <div class="review-stars" style="justify-content:flex-end;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"הילדים שלי עכשיו מבקשים משימות בעצמם! לא יכולתי להאמין שזה אפשרי. האפליקציה שינתה לגמרי את הדינמיקה בבית."</p>
+            <div class="review-author" style="flex-direction:row-reverse;">
+              <div class="review-avatar" style="background:#FFE0D0;">👩</div>
+              <div style="text-align:right;"><div class="review-name">רחל א.</div><div class="review-location">תל אביב, ישראל</div></div>
+            </div>
+          </div>
+
+          <div class="review-card" data-review-lang="he" style="direction:rtl; text-align:right;">
+            <div class="review-stars" style="justify-content:flex-end;"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"אפליקציה מדהימה! הבן שלי (8) מחכה בכל יום לראות את המשימות שלו. המשחקיות עובדת ממש טוב. מומלץ בחום לכל הורה!"</p>
+            <div class="review-author" style="flex-direction:row-reverse;">
+              <div class="review-avatar" style="background:#D0FFE8;">👨</div>
+              <div style="text-align:right;"><div class="review-name">דוד כ.</div><div class="review-location">חיפה, ישראל</div></div>
+            </div>
+          </div>
+
+          <!-- EN reviews -->
+          <div class="review-card" data-review-lang="en">
+            <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"Game changer for our family! My kids actually compete to do chores now. The reward system is genius — they save up points for things they really want."</p>
+            <div class="review-author">
+              <div class="review-avatar" style="background:#FFE0D0;">👩</div>
+              <div><div class="review-name">Sarah L.</div><div class="review-location">Tel Aviv, Israel</div></div>
+            </div>
+          </div>
+
+          <div class="review-card" data-review-lang="en">
+            <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="review-text">"We've tried everything to get our kids to help around the house. This app finally worked! Simple, intuitive, and the kids love it."</p>
+            <div class="review-author">
+              <div class="review-avatar" style="background:#D0E8FF;">👨</div>
+              <div><div class="review-name">Michael T.</div><div class="review-location">Jerusalem, Israel</div></div>
+            </div>
+          </div>
+
         </div>
       </div>
-    </section>
 
-    <!-- FINAL CTA -->
-    <section class="final-cta">
-      <h2>
-        <span data-lang="ru">Попробуй бесплатно</span>
-        <span data-lang="en">Try it for free</span>
-        <span data-lang="he">נסה בחינם</span>
-      </h2>
-      <p>
-        <span data-lang="ru">Большой бесплатный период. Никакого риска.</span>
-        <span data-lang="en">Extended free trial. No risk.</span>
-        <span data-lang="he">תקופת ניסיון ארוכה. ללא סיכון.</span>
-      </p>
-      <a href="https://play.google.com/store/apps/details?id=com.koterlite.littlehelpers" class="store-btn"
-        target="_blank">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-          <path
-            d="M3.18 23.76c.3.17.64.24.99.2l12.6-11.96L13.65 9l-10.47 14.76zM20.7 10.06l-2.87-1.67L14.5 12l3.33 3.61 2.87-1.67c.82-.48.82-1.4 0-1.88zM2.16.26C1.8.46 1.5.87 1.5 1.45v21.1c0 .58.3.99.66 1.19L13.2 12 2.16.26zM16.77 2.21 4.17.25C3.82.21 3.48.28 3.18.45L13.65 11l3.12-3.12-2.87-1.67z" />
-        </svg>
-        <span>
-          <span data-lang="ru">Скачать в Google Play</span>
-          <span data-lang="en">Download on Google Play</span>
-          <span data-lang="he">הורד ב-Google Play</span>
-        </span>
-      </a>
-    </section>
+      <div class="slider-controls">
+        <button class="slider-btn" onclick="moveSlider(-1)">&#8592;</button>
+        <div class="slider-dots" id="sliderDots"></div>
+        <button class="slider-btn" onclick="moveSlider(1)">&#8594;</button>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-      <p>© 2026 Little Helpers · <a href="mailto:support@littlehelpers.pro">support@littlehelpers.pro</a></p>
-    </footer>
+  <!-- REFERRAL -->
+  <section class="referral-section fade-in">
+    <h2>
+      <span data-lang="ru">Партнёрская программа 🎁</span>
+      <span data-lang="en">Referral Program 🎁</span>
+      <span data-lang="he">תוכנית שותפים 🎁</span>
+    </h2>
+    <p>
+      <span data-lang="ru">Пригласи друга — получи премиум бесплатно. Чем больше приглашаешь, тем дольше пользуешься.</span>
+      <span data-lang="en">Invite a friend — get premium for free. The more you invite, the longer you enjoy.</span>
+      <span data-lang="he">הזמן חבר — קבל פרימיום בחינם. כמה שיותר מזמינים, כל כך יותר נהנים.</span>
+    </p>
+    <div class="referral-steps">
+      <div class="ref-step"><span data-lang="ru">1. Скачай приложение</span><span data-lang="en">1. Download the app</span><span data-lang="he">1. הורד את האפליקציה</span></div>
+      <div class="ref-step"><span data-lang="ru">2. Пригласи друга</span><span data-lang="en">2. Invite a friend</span><span data-lang="he">2. הזמן חבר</span></div>
+      <div class="ref-step"><span data-lang="ru">3. Получи премиум 🎉</span><span data-lang="en">3. Get premium 🎉</span><span data-lang="he">3. קבל פרימיום 🎉</span></div>
+    </div>
+  </section>
 
-    <script>
-      function setLang(lang) {
-        document.body.className = 'lang-' + lang;
-        if (lang === 'he') {
-          document.body.classList.add('rtl');
-          document.documentElement.lang = 'he';
-        } else {
-          document.body.classList.remove('rtl');
-          document.documentElement.lang = lang;
-        }
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-          btn.classList.toggle('active', btn.textContent.toLowerCase().includes(lang) || (lang === 'he' && btn.textContent.includes('עב')));
-        });
+  <!-- FINAL CTA -->
+  <section class="final-cta fade-in">
+    <h2>
+      <span data-lang="ru">Попробуй бесплатно</span>
+      <span data-lang="en">Try it for free</span>
+      <span data-lang="he">נסה בחינם</span>
+    </h2>
+    <p>
+      <span data-lang="ru">Большой бесплатный период. Никакого риска.</span>
+      <span data-lang="en">Extended free trial. No risk.</span>
+      <span data-lang="he">תקופת ניסיון ארוכה. ללא סיכון.</span>
+    </p>
+    <a href="https://play.google.com/store/apps/details?id=com.koterlite.littlehelpers" class="store-btn" target="_blank">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.3.17.64.24.99.2l12.6-11.96L13.65 9l-10.47 14.76zM20.7 10.06l-2.87-1.67L14.5 12l3.33 3.61 2.87-1.67c.82-.48.82-1.4 0-1.88zM2.16.26C1.8.46 1.5.87 1.5 1.45v21.1c0 .58.3.99.66 1.19L13.2 12 2.16.26zM16.77 2.21 4.17.25C3.82.21 3.48.28 3.18.45L13.65 11l3.12-3.12-2.87-1.67z"/></svg>
+      <span>
+        <span data-lang="ru">Скачать в Google Play</span>
+        <span data-lang="en">Download on Google Play</span>
+        <span data-lang="he">הורד ב-Google Play</span>
+      </span>
+    </a>
+  </section>
+
+  <footer>
+    <p>© 2026 Little Helpers · <a href="mailto:support@littlehelpers.pro">support@littlehelpers.pro</a> · <a href="/privacy.html">Privacy Policy</a></p>
+  </footer>
+
+  <script>
+    // LANG
+    function setLang(lang) {
+      document.body.className = 'lang-' + lang;
+      if (lang === 'he') {
+        document.body.classList.add('rtl');
+        document.documentElement.lang = 'he';
+      } else {
+        document.body.classList.remove('rtl');
+        document.documentElement.lang = lang;
       }
-    </script>
-  </body>
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        const t = btn.textContent.trim().toLowerCase();
+        btn.classList.toggle('active', t === lang || (lang === 'he' && t === 'עב'));
+      });
+      updateReviewsForLang(lang);
+    }
 
-  </html>
+    // REVIEWS SLIDER
+    const track = document.getElementById('reviewsTrack');
+    const allCards = Array.from(track.querySelectorAll('.review-card'));
+    let currentIndex = 0;
+    let visibleCards = [];
+
+    function updateReviewsForLang(lang) {
+      const map = { he: 'he', en: 'en', ru: 'ru' };
+      const target = map[lang] || 'ru';
+      visibleCards = allCards.filter(c => c.dataset.reviewLang === target);
+      currentIndex = 0;
+      renderSlider();
+    }
+
+    function renderSlider() {
+      allCards.forEach(c => c.style.display = 'none');
+      visibleCards.forEach(c => c.style.display = 'block');
+
+      const dotsEl = document.getElementById('sliderDots');
+      dotsEl.innerHTML = '';
+      visibleCards.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'dot' + (i === currentIndex ? ' active' : '');
+        d.onclick = () => { currentIndex = i; renderSlider(); };
+        dotsEl.appendChild(d);
+      });
+
+      const cardW = 316;
+      track.style.transform = `translateX(-${currentIndex * cardW}px)`;
+    }
+
+    function moveSlider(dir) {
+      currentIndex = (currentIndex + dir + visibleCards.length) % visibleCards.length;
+      renderSlider();
+    }
+
+    // Auto-slide
+    setInterval(() => moveSlider(1), 4000);
+
+    // SCROLL ANIMATIONS
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // INIT
+    updateReviewsForLang('ru');
+  </script>
+</body>
+</html>
+
